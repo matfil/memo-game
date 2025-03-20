@@ -1,13 +1,19 @@
 import { create } from "zustand";
+import { Card } from "../cardList";
 
-export interface Card {
-    id: number;
-    src: string;
-    isFlipped: boolean;
-    isMatched: boolean;
+export interface Coords {
+    x: number;
+    y: number;
+}
+export interface move {
+    coords1: Coords;
+    coords2: Coords;
 }
 
 export interface GameState {
+    moves: move[];
+    setMoves: (moves: move[]) => void;
+    addMove: (move: move) => void;
     cards: Card[];
     setCards: (cards: Card[]) => void;
     gameActive: boolean;
@@ -21,6 +27,9 @@ export interface GameState {
 }
 
 const useGameState = create((set) => ({
+    moves: [],
+    setMoves: (moves:move[]) => set({ moves }),
+    addMove: (move:move) => set((state:GameState) => ({ moves: [...state.moves, move] })),
     cards: [],
     setCards: (cards:Card[]) => set({ cards }),
     gameActive: false,
