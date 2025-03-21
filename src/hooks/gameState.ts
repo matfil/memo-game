@@ -24,6 +24,11 @@ export interface GameState {
     setDifficulty: (difficulty: number) => void;
     time: number;
     setTime: (time: number) => void;
+    incrementTime: () => void;
+    timeInterval: number;
+    startTimer: () => void;
+    stopTimer: () => void;
+
 }
 
 const useGameState = create((set) => ({
@@ -39,5 +44,12 @@ const useGameState = create((set) => ({
     difficulty: 6,
     setDifficulty: (difficulty:number) => set({ difficulty }),
     time: 0,
+    incrementTime: () => set((state:GameState) => ({ time: state.time + 1 })),
     setTime: (time:number) => set({ time }),
+    timeInterval: 0,
+    startTimer: () => set((state:GameState) => ({ timeInterval: window.setInterval(() => state.incrementTime(), 1000) })),
+    stopTimer: () => set((state:GameState) => { clearInterval(state.timeInterval); return { timeInterval: 0 } }),
+
 }));
+
+export default useGameState;
