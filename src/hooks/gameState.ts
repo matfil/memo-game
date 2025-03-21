@@ -28,10 +28,12 @@ export interface GameState {
     timeInterval: number;
     startTimer: () => void;
     stopTimer: () => void;
+    startGame: () => void;
+    stopGame: () => void;
 
 }
 
-const useGameState = create((set) => ({
+const useGameState = create<GameState>((set, get) => ({
     moves: [],
     setMoves: (moves:move[]) => set({ moves }),
     addMove: (move:move) => set((state:GameState) => ({ moves: [...state.moves, move] })),
@@ -41,14 +43,16 @@ const useGameState = create((set) => ({
     setGameActive: (gameActive:boolean) => set({ gameActive }),
     attempts: 0,
     incrementAttempts: () => set((state:GameState) => ({ attempts: state.attempts + 1 })),
-    difficulty: 6,
-    setDifficulty: (difficulty:number) => set({ difficulty }),
+    difficulty: 12,
+    setDifficulty: (difficulty:number) => {console.log(difficulty); set({ difficulty })},
     time: 0,
     incrementTime: () => set((state:GameState) => ({ time: state.time + 1 })),
     setTime: (time:number) => set({ time }),
     timeInterval: 0,
     startTimer: () => set((state:GameState) => ({ timeInterval: window.setInterval(() => state.incrementTime(), 1000) })),
-    stopTimer: () => set((state:GameState) => { clearInterval(state.timeInterval); return { timeInterval: 0 } }),
+    stopTimer: () => set((state:GameState) => { clearInterval(state.timeInterval); return { time: 0, timeInterval: 0 } }),
+    startGame: () => { if(get().gameActive) {{get().setGameActive(true); get().startTimer();}}},
+    stopGame: () => { get().setGameActive(false); get().stopTimer(); },
 
 }));
 
