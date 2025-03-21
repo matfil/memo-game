@@ -1,4 +1,4 @@
-export interface Card {
+export interface CardInterface {
     index: number;
     src: string;
     isFlipped: boolean;
@@ -6,7 +6,7 @@ export interface Card {
     id?: number;
 }
 
-const cardList : Card[] = [
+const cardList : CardInterface[] = [
     {index: 1, src: "images/1.png", isFlipped: false, isMatched: false},
     {index: 2, src: "images/2.png", isFlipped: false, isMatched: false},
     {index: 3, src: "images/3.png", isFlipped: false, isMatched: false},

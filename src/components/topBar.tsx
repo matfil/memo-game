@@ -14,7 +14,7 @@ const topBar:React.FC<TopBarProps> = (props:TopBarProps) => {
         <>
         <div className='topBar'>
             <select name="difficulty" id="difficulty" value={props.difficulty} disabled={props.gameActive} onChange={(e) => props.setDifficulty(parseInt(e.target.value))}>
-                <option value="6">Easy</option>
+                <option value="4">Easy</option>
                 <option value="8">Medium</option>
                 <option value="12">Hard</option>
             </select>

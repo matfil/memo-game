@@ -1,0 +1,7 @@
+@for $i from 1 through 3 {
+  .board-#{4*$i} {
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(#{$i}, 1fr);
+  }
+}

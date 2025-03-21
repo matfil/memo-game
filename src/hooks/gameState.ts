@@ -1,17 +1,17 @@
 import { create } from "zustand";
-import cardList, { Card } from "../cardList";
+import cardList, { CardInterface } from "../cardList";
 
-export interface move {
-  card1: Card;
-  card2: Card;
+export interface Move {
+  card1: CardInterface;
+  card2: CardInterface;
 }
 
 export interface GameState {
-  moves: move[];
-  setMoves: (moves: move[]) => void;
-  addMove: (move: move) => void;
-  cards: Card[];
-  setCards: (cards: Card[]) => void;
+  moves: Move[];
+  setMoves: (moves: Move[]) => void;
+  addMove: (move: Move) => void;
+  cards: CardInterface[];
+  setCards: (cards: CardInterface[]) => void;
   gameActive: boolean;
   setGameActive: (gameActive: boolean) => void;
   attempts: number;
@@ -29,17 +29,17 @@ export interface GameState {
   newCardSet: () => void;
 }
 
-function shuffle(array: Card[]): Card[] {
+function shuffle(array: CardInterface[]): CardInterface[] {
   return array.sort(() => Math.random() - 0.5);
 }
 
 const useGameState = create<GameState>((set, get) => ({
   moves: [],
-  setMoves: (moves: move[]) => set({ moves }),
-  addMove: (move: move) =>
+  setMoves: (moves: Move[]) => set({ moves }),
+  addMove: (move: Move) =>
     set((state: GameState) => ({ moves: [...state.moves, move] })),
   cards: [],
-  setCards: (cards: Card[]) => set({ cards }),
+  setCards: (cards: CardInterface[]) => set({ cards }),
   gameActive: false,
   setGameActive: (gameActive: boolean) => set({ gameActive }),
   attempts: 0,
