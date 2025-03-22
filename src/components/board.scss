@@ -1,7 +1,7 @@
-@use '../colors';
+@use "../colors";
 @for $i from 1 through 3 {
   .board-#{4*$i} {
-    display:grid;
+    display: grid;
     width: 100%;
     padding: 1vw;
     background: colors.$gradientboard;

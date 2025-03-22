@@ -104,7 +104,7 @@ const useGameState = create<GameState>((set, get) => ({
       cards: [...randomCards, ...randomCards].map((card, index) => ({
         ...card,
         id: index,
-      }))
+      })),
     });
   },
   flipCard: (card: CardInterface) => {
@@ -150,7 +150,7 @@ const useGameState = create<GameState>((set, get) => ({
     };
     newResults.push(results);
     localStorage.setItem("results", JSON.stringify(newResults));
-  }
+  },
 }));
 
 export default useGameState;

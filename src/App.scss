@@ -1,39 +1,38 @@
-@use './colors';
-button{
-    background: colors.$primaryButton;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    margin: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    &:hover{
-        background: colors.$secondaryButton;
-    }
-    &:active{
-        background: green;
-    }
-    &:focus{
-        outline: none;
-    }
-    &:disabled{
-        background: colors.$disabledButton;
-        cursor: not-allowed;
-    }
+@use "./colors";
+button {
+  background: colors.$primaryButton;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  &:hover {
+    background: colors.$secondaryButton;
+  }
+  &:active {
+    background: green;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background: colors.$disabledButton;
+    cursor: not-allowed;
+  }
 }
-.actions{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
-h1{
-    font-size: 2rem;
-    text-align: center;
-    margin: 10px;
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin: 10px;
 }
