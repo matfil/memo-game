@@ -27,6 +27,8 @@ export interface GameState {
   startGame: () => void;
   stopGame: () => void;
   newCardSet: () => void;
+  flipCard: (card: CardInterface) => void;
+  matchCards: (card: CardInterface) => void;
 }
 
 function shuffle(array: CardInterface[]): CardInterface[] {
@@ -64,7 +66,7 @@ const useGameState = create<GameState>((set, get) => ({
       return { time: 0, timeInterval: 0 };
     }),
   startGame: () => {
-    if (get().gameActive) {
+    if (get().gameActive === false) {
       {
         get().newCardSet();
         get().setMoves([]);
@@ -85,6 +87,22 @@ const useGameState = create<GameState>((set, get) => ({
         ...card,
         id: index,
       }))
+    });
+  },
+  flipCard: (card: CardInterface) => {
+    set((state: GameState) => {
+      const cards = state.cards.map((c) =>
+        c.id === card.id ? { ...c, isFlipped: !c.isFlipped } : c
+      );
+      return { cards };
+    });
+  },
+  matchCards: (card: CardInterface) => {
+    set((state: GameState) => {
+      const cards = state.cards.map((c) =>
+        c.index === card.index ? { ...c, isMatched: true } : c
+      );
+      return { cards };
     });
   },
 }));
