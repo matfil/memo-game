@@ -11,27 +11,28 @@ interface boardProps {
   cards: CardInterface[];
 }
 
-
 const board: React.FC<boardProps> = (props) => {
-    
-    const [clickedCards, setClickedCards] = useState<CardInterface[]>([]);
-    const handleCardClick = (card:CardInterface) => {if(clickedCards.length === 0){
-        setClickedCards([card]);
-        props.flipCard(card);
-      }else if(clickedCards.length === 1 && card.isFlipped === false){
-        props.flipCard(card);
-        props.handleMove({card1: clickedCards[0], card2: card});
-        setClickedCards([]);
-      }};
-      
+  const [clickedCards, setClickedCards] = useState<CardInterface[]>([]);
+  const handleCardClick = (card: CardInterface) => {
+    if (card.isFlipped) {
+      return; // do nothing
+    }
+
+    if (clickedCards.length === 0) {
+      setClickedCards([card]);
+      props.flipCard(card);
+    } else if (clickedCards.length === 1 && card.isFlipped === false) {
+      props.flipCard(card);
+      props.handleMove({ card1: clickedCards[0], card2: card });
+      setClickedCards([]);
+    }
+  };
 
   return (
     <div className={"board-" + props.difficulty}>
-      {props.cards.map((card, index) => { 
-        return(
-        <Card key={index} card={card} onClick={handleCardClick}/>
-        );}
-    )}
+      {props.cards.map((card, index) => {
+        return <Card key={index} card={card} onClick={handleCardClick} />;
+      })}
     </div>
   );
 };

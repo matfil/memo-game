@@ -1,5 +1,5 @@
 import { CardInterface } from "../cardList";
-
+import './card.scss';
 interface CardProps {
     card: CardInterface;
     onClick: (card:CardInterface) => void;
@@ -10,8 +10,9 @@ const card : React.FC<CardProps>  = (props) => {
     const handleOnClick = () => {props.onClick(props.card)};
     return (
         <>
-        <div onClick={handleOnClick}>
-            <h1>Card</h1>
+        <div className="card" onClick={handleOnClick}>
+            {props.card.isFlipped ? <img src={props.card.src} alt={'Card '+props.card.index.toString()} /> : <img src={'./images/back.svg'} alt="back" />}
+            
         </div>
         </>
     );

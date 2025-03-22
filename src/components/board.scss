@@ -1,6 +1,10 @@
+@use '../colors';
 @for $i from 1 through 3 {
   .board-#{4*$i} {
     display:grid;
+    width: 100%;
+    padding: 1vw;
+    background: colors.$gradientboard;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(#{$i}, 1fr);
   }

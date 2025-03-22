@@ -1,7 +1,7 @@
 import './App.scss'
 import React from 'react'
 import TopBar from './components/topBar'
-import useGameState, { GameState, Move } from './hooks/gameState';
+import useGameState, { GameState } from './hooks/gameState';
 import Board from './components/board';
 
 const App: React.FC = () =>{
@@ -12,19 +12,7 @@ const App: React.FC = () =>{
   const difficulty = useGameState((state) => state.difficulty);
   const attempts = useGameState((state) => state.attempts);
   const cards = useGameState((state) => state.cards);
-
-  const handleMove = (move: Move) => {
-    state.addMove(move);
-    state.incrementAttempts();
-    if(move.card1.index === move.card2.index){
-    state.matchCards(move.card1);
-    }else{
-      setTimeout(() => {
-        state.flipCard(move.card1);
-        state.flipCard(move.card2);
-      }, 500);
-    }
-  };
+  const handleMove = state.handleMove;
 
   return (
     <>

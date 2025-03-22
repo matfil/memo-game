@@ -15,6 +15,7 @@ export interface GameState {
   gameActive: boolean;
   setGameActive: (gameActive: boolean) => void;
   attempts: number;
+  setAttempts: (attempts: number) => void;
   incrementAttempts: () => void;
   difficulty: number;
   setDifficulty: (difficulty: number) => void;
@@ -29,10 +30,16 @@ export interface GameState {
   newCardSet: () => void;
   flipCard: (card: CardInterface) => void;
   matchCards: (card: CardInterface) => void;
+  handleMove: (move: Move) => void;
+  saveResults: () => void;
+  resetGame: () => void;
 }
 
 function shuffle(array: CardInterface[]): CardInterface[] {
   return array.sort(() => Math.random() - 0.5);
+}
+function checkIfWon(cards: CardInterface[]): boolean {
+  return cards.every((card) => card.isMatched);
 }
 
 const useGameState = create<GameState>((set, get) => ({
@@ -45,6 +52,7 @@ const useGameState = create<GameState>((set, get) => ({
   gameActive: false,
   setGameActive: (gameActive: boolean) => set({ gameActive }),
   attempts: 0,
+  setAttempts: (attempts: number) => set({ attempts }),
   incrementAttempts: () =>
     set((state: GameState) => ({ attempts: state.attempts + 1 })),
   difficulty: 12,
@@ -78,6 +86,16 @@ const useGameState = create<GameState>((set, get) => ({
   stopGame: () => {
     get().setGameActive(false);
     get().stopTimer();
+    get().resetGame();
+  },
+  resetGame: () => {
+    get().setGameActive(false);
+    get().stopTimer();
+    get().setCards([]);
+    get().setMoves([]);
+    get().setDifficulty(12);
+    get().setTime(0);
+    get().setAttempts(0);
   },
   newCardSet: () => {
     const randomCards = shuffle(cardList).slice(0, get().difficulty / 2);
@@ -105,6 +123,34 @@ const useGameState = create<GameState>((set, get) => ({
       return { cards };
     });
   },
+  handleMove: (move: Move) => {
+    get().addMove(move);
+    get().incrementAttempts();
+    if (move.card1.index === move.card2.index) {
+      get().matchCards(move.card1);
+    } else {
+      setTimeout(() => {
+        get().flipCard(move.card1);
+        get().flipCard(move.card2);
+      }, 500);
+    }
+    if (checkIfWon(get().cards)) {
+      get().saveResults();
+      get().stopGame();
+    }
+  },
+  saveResults: () => {
+    const savedResults = localStorage.getItem("results");
+    const newResults = savedResults ? JSON.parse(savedResults) : [];
+    const results = {
+      date: new Date(),
+      time: get().time,
+      attempts: get().attempts,
+      difficulty: get().difficulty,
+    };
+    newResults.push(results);
+    localStorage.setItem("results", JSON.stringify(newResults));
+  }
 }));
 
 export default useGameState;
