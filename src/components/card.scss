@@ -1,8 +1,9 @@
 @use '../colors';
 
 img{
-    width: 100px;
-    height: 100px;
+    width: 80%;
+    height: 80%;
+    object-fit:fill;
 }
 
 .card{
